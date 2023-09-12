@@ -19,7 +19,7 @@ public class AddRemovePage {
     private By deleteBox = By.xpath("//button[@class='added-manually']");
     private By addNewBox=By.xpath("//button[contains(text(),'Add Element')]");
 
-    public void addDeleteBox(){
+    public void addDeleteBox()  {
         LoggingManager.info("addDeleteBox: Waiting for the element to be clickable for Adding of Deletion box");
         explicitWait.until(ExpectedConditions.elementToBeClickable(addNewBox)).click();
     }
@@ -33,7 +33,7 @@ public class AddRemovePage {
         }
     }
 
-    public void removeDeleteBox(){
+    public void removeDeleteBox()  {
 
         LoggingManager.info("removeDeleteBox: removing deletion box");
         explicitWait.until(ExpectedConditions.elementToBeClickable(deleteBox)).click();
