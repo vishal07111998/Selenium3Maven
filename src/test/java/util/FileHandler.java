@@ -6,16 +6,22 @@ import java.util.Properties;
 
 public class FileHandler {
     Properties properties;
+
+
     public FileHandler(String propertiesFilePath) throws IOException {
-        FileReader configProperties=new FileReader("src/test/resources/config.properties");
-         properties= new Properties();
+        LoggingManager.info("In Class FileHandler Reading Configuration Properties File From Path: " + propertiesFilePath);
+        FileReader configProperties = new FileReader(propertiesFilePath);
+        properties = new Properties();
         properties.load(configProperties);
     }
-    public String getBrowserName()  {
-       return properties.get("browser").toString();
+
+    public String getBrowserName() {
+        LoggingManager.info("getBrowserName: Reading Browser Name From Properties File");
+        return properties.get("browser").toString();
     }
 
-    public String getBasePageUrl(){
+    public String getBasePageUrl() {
+        LoggingManager.info("getBasePageUrl: Reading BaseURl For Tests");
         return properties.get("basePageUrl").toString();
     }
 }

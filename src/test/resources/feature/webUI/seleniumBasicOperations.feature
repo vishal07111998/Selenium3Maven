@@ -1,6 +1,7 @@
+@BasicSeleniumOperations
 Feature: Selenium Interaction With Browser
 
-  @abc
+  @ClickOperation
   Scenario: Performing Clicking Action using Selenium
     Given I open the Add Delete Elements
     When I try to add Delete Box
