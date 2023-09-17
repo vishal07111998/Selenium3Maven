@@ -8,7 +8,6 @@ import static org.openqa.selenium.remote.BrowserType.*;
 public class DriverHelper {
     private String browserName;
 
-
     public DriverHelper(String browserName) {
         LoggingManager.info("Creating the Driver for the browser: "+browserName);
         this.browserName = browserName.toLowerCase();
