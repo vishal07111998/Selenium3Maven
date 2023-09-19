@@ -17,3 +17,11 @@ Feature: Selenium Interaction With Browser
     Then I can login in secure area
     When I logout from secure area
     Then I will be on login page
+
+  @CheckBoxOperation
+  Scenario: Working With Checkbox using Selenium
+    Given I open the checkbox Page
+    When I select the checkbox
+    Then Checkbox should be selected
+    When I unselect the checkbox
+    Then checkbox should be unselected

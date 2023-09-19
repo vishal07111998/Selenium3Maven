@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumHelper {
     static int waitTimeInSeconds = 30;
-    // static WebDriver driver;
-
 
     public static WebDriver invokeBrowser(String browserName, String baseUrl) {
         LoggingManager.info("invokeBrowser: invoking the browser " + browserName + " with URL " + baseUrl);
@@ -33,27 +31,32 @@ public class SeleniumHelper {
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
-    public static boolean isElementExists(WebDriver driver, By element, int timeout){
-      WebDriverWait explicitWait=new WebDriverWait(driver,timeout);
-        try{
+    public static boolean isElementExists(WebDriver driver, By element, int timeout) {
+        WebDriverWait explicitWait = new WebDriverWait(driver, timeout);
+        try {
             explicitWait.until(ExpectedConditions.visibilityOfElementLocated(element));
             return true;
-        }catch (TimeoutException timeoutException){
-            return false;
-        }
-    }
-    public static boolean isElementExists(WebDriver driver, By element){
-        WebDriverWait explicitWait=new WebDriverWait(driver,waitTimeInSeconds);
-        try{
-            explicitWait.until(ExpectedConditions.visibilityOfElementLocated(element));
-            return true;
-        }catch (TimeoutException timeoutException){
+        } catch (TimeoutException timeoutException) {
             return false;
         }
     }
 
-    public static void enterText(WebDriver driver, By element, String text, int timeout){
-        WebDriverWait explicitWait=new WebDriverWait(driver,timeout);
+    public static boolean isElementExists(WebDriver driver, By element) {
+        WebDriverWait explicitWait = new WebDriverWait(driver, waitTimeInSeconds);
+        try {
+            explicitWait.until(ExpectedConditions.visibilityOfElementLocated(element));
+            return true;
+        } catch (TimeoutException timeoutException) {
+            return false;
+        }
+    }
+
+    public static void enterText(WebDriver driver, By element, String text, int timeout) {
+        WebDriverWait explicitWait = new WebDriverWait(driver, timeout);
         explicitWait.until(ExpectedConditions.elementToBeClickable(element)).sendKeys(text);
+    }
+
+    public static Boolean isCheckboxSelected(WebDriver driver, By element) {
+        return driver.findElement(element).isSelected();
     }
 }
