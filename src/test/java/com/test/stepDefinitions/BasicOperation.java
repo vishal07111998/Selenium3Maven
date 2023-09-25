@@ -2,17 +2,19 @@ package com.test.stepDefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import util.FileHandler;
+import util.LoggingManager;
+import util.ScreenShotHelper;
+import util.SeleniumHelper;
 import webPages.AddRemoveBox;
 import webPages.Checkbox;
 import webPages.Home;
-import util.FileHandler;
-import util.LoggingManager;
-import util.SeleniumHelper;
 import webPages.Login;
 
 import java.io.IOException;
@@ -38,7 +40,11 @@ public class BasicOperation {
 
 
     @After
-    public void tearDown() {
+    public void tearDown(Scenario scenario) {
+        if(scenario.isFailed()){
+            byte[] screenshot = ScreenShotHelper.captureScreenShot(driver);
+            scenario.embed(screenshot,"image/png",scenario.getName());
+        }
         driver.close();
         driver.quit();
     }
