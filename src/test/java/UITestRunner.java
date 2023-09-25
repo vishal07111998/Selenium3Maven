@@ -6,7 +6,8 @@ import io.cucumber.testng.CucumberOptions;
         glue = "com.test.stepDefinitions",
         plugin = {"pretty", "json:target/cucumber-reports/Cucumber.json",
                 "junit:target/cucumber-reports/Cucumber.xml",
-                "html:target/cucumber-reports"},
+                "html:target/cucumber-reports",
+        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         monochrome = true)
 public class UITestRunner extends AbstractTestNGCucumberTests {
 }
