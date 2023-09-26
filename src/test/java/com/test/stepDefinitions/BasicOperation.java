@@ -35,21 +35,17 @@ public class BasicOperation {
         addRemoveBox = new AddRemoveBox(driver);
         login = new Login(driver);
         checkbox = new Checkbox(driver);
-        frames=new Frames(driver);
+        frames = new Frames(driver);
         newWindow = new NewWindow(driver);
     }
 
     @After
-    public void tearDown(Scenario scenario) throws IOException {
-      //  if (scenario.isFailed()) {
+    public void tearDown(Scenario scenario) {
+        if (!scenario.isFailed()) {
             byte[] screenshot = ScreenShotHelper.captureScreenShot(driver);
-           // TakesScreenshot take=(TakesScreenshot)driver;
-            //File source= takesScreenshot.getScreenshotAs(OutputType.FILE);
-            //String destination = System.getProperty("user.dir") + "/FailedTestsScreenshots/"+scenario.getName()+".png";
-            //File finalDestination = new File(destination);
-            //FileUtils.copyFile(source, finalDestination);
+            scenario.write("Test Screenshot for scenario: " + scenario.getName());
             scenario.embed(screenshot, "image/png", scenario.getName());
-       // }
+        }
         driver.close();
         driver.quit();
     }
@@ -182,13 +178,13 @@ public class BasicOperation {
 
     @When("user wants to visit {string}")
     public void userWantsToVisit(String iframeName) {
-        LoggingManager.info("userWantsToVisit: Switching The Content To Iframe with Name: "+iframeName);
+        LoggingManager.info("userWantsToVisit: Switching The Content To Iframe with Name: " + iframeName);
         frames.switchFrame(iframeName);
     }
 
     @Then("user should be able to see {string}")
     public void userShouldBeAbleToSee(String frameContent) {
-        LoggingManager.info("userShouldBeAbleToSee: Verify User Can See Frame Text "+frameContent+" after switching to frame");
+        LoggingManager.info("userShouldBeAbleToSee: Verify User Can See Frame Text " + frameContent + " after switching to frame");
         Assert.assertTrue(frameContent.equalsIgnoreCase(frames.getFrameContent()));
     }
 }
