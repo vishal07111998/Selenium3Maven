@@ -6,6 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Iterator;
+import java.util.Set;
+
 public class SeleniumHelper {
     static int waitTimeInSeconds = 30;
 
@@ -58,5 +61,42 @@ public class SeleniumHelper {
 
     public static Boolean isCheckboxSelected(WebDriver driver, By element) {
         return driver.findElement(element).isSelected();
+    }
+
+    public static String getText(WebDriver driver, By element) {
+        if (!isElementExists(driver, element)) {
+            LoggingManager.info("No Such Element Exists");
+            return "";
+        } else {
+            return driver.findElement(element).getText();
+        }
+    }
+
+    public static WebDriver switchToChildWindow(WebDriver driver) {
+        LoggingManager.info("switchToWindow: Switch To Child Window");
+        return switchWindow(driver);
+    }
+
+    public static WebDriver switchToMainWindow(WebDriver driver) {
+        LoggingManager.info("switchToWindow: Switch To Original Window");
+        return switchWindow(driver);
+    }
+
+    private static WebDriver switchWindow(WebDriver driver) {
+        String currentWindow = driver.getWindowHandle();
+        Set<String> allWindows = driver.getWindowHandles();
+
+        Iterator windowIterator = allWindows.iterator();
+
+        while (windowIterator.hasNext()) {
+            String currentWindowName = (String) windowIterator.next();
+            if (!currentWindowName.equalsIgnoreCase(currentWindow)) {
+                return driver.switchTo().window(currentWindowName);
+            }
+        }
+        return driver;
+    }
+    public static WebDriver switchToFrameWith(WebDriver driver, String frameName){
+       return driver.switchTo().frame(frameName);
     }
 }

@@ -12,10 +12,8 @@ import util.FileHandler;
 import util.LoggingManager;
 import util.ScreenShotHelper;
 import util.SeleniumHelper;
-import webPages.AddRemoveBox;
-import webPages.Checkbox;
-import webPages.Home;
-import webPages.Login;
+import webPages.*;
+
 
 import java.io.IOException;
 
@@ -25,7 +23,8 @@ public class BasicOperation {
     Login login;
     WebDriver driver;
     Checkbox checkbox;
-
+    NewWindow newWindow;
+    Frames frames;
 
     @Before
     public void setupRequiredData() throws IOException {
@@ -36,19 +35,24 @@ public class BasicOperation {
         addRemoveBox = new AddRemoveBox(driver);
         login = new Login(driver);
         checkbox = new Checkbox(driver);
+        frames=new Frames(driver);
+        newWindow = new NewWindow(driver);
     }
 
-
     @After
-    public void tearDown(Scenario scenario) {
-        if(scenario.isFailed()){
+    public void tearDown(Scenario scenario) throws IOException {
+      //  if (scenario.isFailed()) {
             byte[] screenshot = ScreenShotHelper.captureScreenShot(driver);
-            scenario.embed(screenshot,"image/png",scenario.getName());
-        }
+           // TakesScreenshot take=(TakesScreenshot)driver;
+            //File source= takesScreenshot.getScreenshotAs(OutputType.FILE);
+            //String destination = System.getProperty("user.dir") + "/FailedTestsScreenshots/"+scenario.getName()+".png";
+            //File finalDestination = new File(destination);
+            //FileUtils.copyFile(source, finalDestination);
+            scenario.embed(screenshot, "image/png", scenario.getName());
+       // }
         driver.close();
         driver.quit();
     }
-
 
     @Given("I open the Add Delete Elements")
     public void iOpenTheAddDeleteElements() {
@@ -138,6 +142,54 @@ public class BasicOperation {
     public void checkboxShouldBeUnselected() {
         LoggingManager.info("checkboxShouldBeUnselected: CheckBox Should Be Unselected");
         Assert.assertFalse(checkbox.isCheckBoxFirstSelected());
+    }
+
+    @Given("I open the multiple window")
+    public void iOpenTheMultipleWindow() {
+        LoggingManager.info("iOpenTheMultipleWindow: Opening multiple window");
+        home.openNewWindow();
+    }
+
+    @When("I open new window")
+    public void iOpenNewWindow() {
+        LoggingManager.info("iOpenNewWindow: Opening A new window");
+        newWindow.openNewWindow();
+    }
+
+    @Then("new window should be opened")
+    public void newWindowShouldBeOpened() {
+        LoggingManager.info("newWindowShouldBeOpened: New Window Should Be Opened");
+        Assert.assertEquals("New Window", newWindow.switchToNewWindow());
+    }
+
+    @When("I tried to go back to original window")
+    public void iTriedToGoBackToOriginalWindow() {
+        LoggingManager.info("iTriedToGoBackToOriginalWindow: Opening Original Window");
+        newWindow.switchToOriginalWindow();
+    }
+
+    @Then("I can open original window")
+    public void iCanOpenOriginalWindow() {
+        LoggingManager.info("iCanOpenOriginalWindow: Verifying that I switched to original window");
+        Assert.assertTrue(newWindow.isSwitchedToOriginalWindow(driver));
+    }
+
+    @Given("user open the multiple Iframe page")
+    public void userOpenTheMultipleIframePage() {
+        LoggingManager.info("userOpenTheMultipleIframePage: User opening multiple frames page");
+        home.openNestedFrames();
+    }
+
+    @When("user wants to visit {string}")
+    public void userWantsToVisit(String iframeName) {
+        LoggingManager.info("userWantsToVisit: Switching The Content To Iframe with Name: "+iframeName);
+        frames.switchFrame(iframeName);
+    }
+
+    @Then("user should be able to see {string}")
+    public void userShouldBeAbleToSee(String frameContent) {
+        LoggingManager.info("userShouldBeAbleToSee: Verify User Can See Frame Text "+frameContent+" after switching to frame");
+        Assert.assertTrue(frameContent.equalsIgnoreCase(frames.getFrameContent()));
     }
 }
 

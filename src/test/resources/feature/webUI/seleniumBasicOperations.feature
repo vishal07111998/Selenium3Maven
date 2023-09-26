@@ -9,7 +9,6 @@ Feature: Selenium Interaction With Browser
     When I try to remove Delete Box
     Then Delete Box Should Be Removed
 
-
   @SendTextOperation
   Scenario: Sending Text Using Selenium
     Given I open the login page
@@ -25,3 +24,17 @@ Feature: Selenium Interaction With Browser
     Then Checkbox should be selected
     When I unselect the checkbox
     Then checkbox should be unselected
+
+  @HandleMultipleWindow
+  Scenario: Working With Multiple Window using Selenium
+    Given I open the multiple window
+    When I open new window
+    Then new window should be opened
+    When I tried to go back to original window
+    Then I can open original window
+
+  @HandleMultipleIFrame
+  Scenario: Working with Multiple Iframe using Selenium
+    Given user open the multiple Iframe page
+    When user wants to visit "bottom"
+    Then user should be able to see "bottom"
