@@ -187,5 +187,11 @@ public class BasicOperation {
         LoggingManager.info("userShouldBeAbleToSee: Verify User Can See Frame Text " + frameContent + " after switching to frame");
         Assert.assertTrue(frameContent.equalsIgnoreCase(frames.getFrameContent()));
     }
+
+    @Given("user open the hover page")
+    public void userOpenTheHoverPage() {
+        LoggingManager.info("userOpenTheHoverPage: Opening the Page For Performing Mouse Event");
+        home.openHoverPage();
+    }
 }
 

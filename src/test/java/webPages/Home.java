@@ -16,6 +16,7 @@ public class Home {
     private final By checkboxElement = By.xpath("//a[contains(text(),'Checkboxes')]");
     private final By multipleWindowElement=By.xpath("//a[contains(text(),'Multiple Windows')]");
     private final By nestedFramesElement=By.xpath("//a[contains(text(),'Nested Frames')]");
+    private final By hoverElement=By.xpath("//a[contains(text(),'Hovers')]");
     public void viewAddRemoveElementPage() {
         LoggingManager.info("ViewAddRemoveElementPage: Navigating to Add/Remove Element Page");
         clickElement(driver, AddRemoveElement);
@@ -35,5 +36,9 @@ public class Home {
     public void openNestedFrames(){
         LoggingManager.info("openNestedFrames: Navigating To nested Frames Page");
         clickElement(driver,nestedFramesElement);
+    }
+    public void openHoverPage(){
+        LoggingManager.info("openHoverPage: Navigating To Page Where Mouse Hover Event Can Happen");
+        clickElement(driver,hoverElement);
     }
 }

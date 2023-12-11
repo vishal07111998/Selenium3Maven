@@ -38,3 +38,9 @@ Feature: Selenium Interaction With Browser
     Given user open the multiple Iframe page
     When user wants to visit "bottom"
     Then user should be able to see "bottom"
+
+    @MouseHoverEvent
+    Scenario: Working with Event With Mouse Hover
+      Given user open the hover page
+      When user hover over image of user1
+      Then user can see the text user1 on page
